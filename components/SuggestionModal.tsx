@@ -1,4 +1,4 @@
-
+// src/components/SuggestionModal.tsx
 import React from 'react';
 
 interface SuggestionModalProps {
@@ -14,7 +14,7 @@ const SuggestionModal: React.FC<SuggestionModalProps> = ({ suggestions, isLoadin
         <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">¡Ideas para divertirse!</h2>
         {isLoading ? (
           <div className="flex justify-center items-center h-32">
-            <div className="w-8 h-8 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-8 h-8 border-4 border-teal-500 border-t-transparent rounded-full animate-spin" />
           </div>
         ) : (
           <ul className="space-y-3 list-disc list-inside text-gray-700">
