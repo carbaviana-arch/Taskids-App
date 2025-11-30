@@ -1,0 +1,352 @@
+:root {
+  --primary: #6c5ce7; /* Morado/Violeta */
+  --secondary: #00b894; /* Turquesa */
+  --accent: #fdcb6e; /* Naranja/Amarillo */
+  --danger: #ff7675; /* Rojo */
+  --bg: #f4f7f6; /* Fondo gris claro */
+  --dark: #2d3436; /* Texto oscuro */
+  --white: #ffffff;
+  --dock-height: 70px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg);
+  color: var(--dark);
+  padding-bottom: calc(var(--dock-height) + 20px);  
+}
+
+/* LAYOUT PRINCIPAL */
+.app-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* HEADER */
+header {
+  background: var(--primary);
+  color: var(--white);
+  padding: 20px;
+  text-align: center;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+}
+
+header h1 { font-size: 1.8rem; margin-bottom: 5px; }
+header p { opacity: 0.8; font-size: 0.9rem; }
+
+/* MAIN LAYOUT */
+main { padding: 15px; max-width: 600px; margin: 0 auto; }
+
+h3 { color: var(--primary); margin: 20px 0 10px; border-left: 4px solid var(--secondary); padding-left: 10px; }
+h4 { color: var(--dark); font-size: 1.1rem; margin: 15px 0 10px; }
+
+
+section, details, .premio-card, .horario-dia, .agenda-card, .form-card {
+  background: var(--white);
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+/* MARCADOR */
+#marcador { padding: 15px; background: linear-gradient(135deg, #fff, #f0f3ff); }
+.stats-row { display: flex; justify-content: space-around; text-align: center; }
+.label { display: block; font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+.big-number { font-size: 2rem; font-weight: 800; color: var(--primary); }
+.stat-box { margin: 0 5px; } 
+
+
+/* BOTONES */
+button { border: none; cursor: pointer; font-family: inherit; transition: transform 0.1s; }
+button:active { transform: scale(0.95); }
+
+#acciones { display: flex; gap: 10px; background: transparent; box-shadow: none; padding: 0; margin-top: 15px; }
+#acciones button {
+  flex: 1; padding: 12px; border-radius: 12px;
+  color: white; font-weight: bold; font-size: 0.9rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.gold { background: var(--accent); color: var(--dark) !important; }
+.blue { background: var(--primary); color: var(--white) !important; }
+.danger-outline { 
+  background: transparent; border: 2px solid var(--danger); color: var(--danger); 
+  padding: 10px 20px; border-radius: 20px; font-weight: bold;
+}
+/* NUEVO BOTÓN ADMIN TAREAS */
+.btn-admin {
+    background: transparent; 
+    border: 1px solid var(--primary); 
+    color: var(--primary);
+    padding: 6px 12px; 
+    border-radius: 8px; 
+    font-weight: bold;
+}
+
+/* PROGRESO */
+#progreso { padding: 15px; text-align: center; }
+#xpBar { height: 15px; background: #dfe6e9; border-radius: 10px; margin: 10px 0; overflow: hidden; }
+#xpFill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--secondary), #55efc4); transition: width 0.5s ease; }
+
+/* TAREAS (ACORDEÓN) - Estilos adaptados */
+details { margin-bottom: 10px; }
+summary { 
+    list-style: none;
+    cursor: pointer;
+    font-size: 1.125rem;
+    font-weight: bold;
+    padding: 0.75rem;
+    background-color: #e0e7ff; /* Color de fondo claro para el acordeón */
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: flex; 
+    justify-content: space-between;
+}
+summary::-webkit-details-marker { display: none; }
+summary::after { content: '▼'; float: right; font-weight: bold; margin-left: 10px; }
+details[open] summary::after { content: '▲'; }
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    border-top: 1px solid #f1f2f6;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+.task-info { display: flex; flex-direction: column; }
+.task-pts { font-size: 0.75rem; color: #888; }
+.task.completed { background-color: #d1fae5; /* Green 100 */ }
+.task.failed { background-color: #fee2e2; /* Red 100 */ }
+.task-buttons { display: flex; gap: 8px; }
+
+.btn-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s ease;
+    cursor: pointer;
+}
+.check {
+    background-color: var(--secondary); 
+    color: white;
+}
+.cross {
+    background-color: var(--accent); 
+    color: white;
+}
+
+/* ADMIN TAREAS */
+.task-admin-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f7f9fc; /* Light blue/gray */
+    border-radius: 8px;
+    border-left: 4px solid var(--primary);
+}
+.task-admin-info {
+    flex-grow: 1;
+}
+.task-admin-name {
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--dark);
+}
+.task-admin-meta {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+.task-admin-actions button {
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-left: 0.5rem;
+}
+.task-admin-actions .btn-edit { background: var(--accent); color: var(--dark); }
+.task-admin-actions .btn-delete { background: var(--danger); color: var(--white); }
+
+
+/* TIENDA */
+.premio-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.premio-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+.premio-icono {
+    font-size: 3rem;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+.price-tag {
+    background-color: var(--accent); 
+    color: var(--dark);
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-weight: bold;
+    margin-top: 0.5rem;
+    display: inline-block;
+}
+
+/* HORARIO */
+.horario-dia {
+    margin-bottom: 1.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.dia-titulo {
+    background-color: var(--primary);
+    color: white;
+    padding: 0.75rem;
+    font-weight: bold;
+    text-align: center;
+}
+.asignatura {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #f3f4f6;
+    background-color: white;
+}
+.asignatura:last-child {
+    border-bottom: none;
+}
+.extra-curricular {
+    background-color: #fef3c7; /* Yellow 100 */
+    font-weight: 600;
+}
+
+/* AGENDA */
+.agenda-card {
+    border-left: 6px solid #ccc; /* Default */
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+}
+.agenda-card.examen { border-left-color: var(--danger); }
+.agenda-card.cita { border-left-color: var(--accent); }
+.agenda-card.entrega { border-left-color: var(--secondary); }
+.agenda-card.otro { border-left-color: #9ca3af; } /* Gray */
+
+.agenda-title {
+    font-weight: 800;
+    font-size: 1.125rem;
+    color: var(--primary);
+}
+.agenda-info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 0.25rem;
+}
+.agenda-comments {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: #f9fafb;
+    border-radius: 6px;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+.agenda-actions {
+    margin-top: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+.agenda-actions button {
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    transition: background-color 0.2s;
+    cursor: pointer;
+}
+.btn-edit { background-color: var(--accent); color: var(--dark); }
+.btn-delete { background-color: var(--danger); color: var(--white); }
+
+/* INFORME SEMANAL - Nuevos estilos */
+#totalStats {
+    background: #e0e7ff; /* Light color from primary palette */
+    padding: 1rem;
+    border-radius: 12px;
+}
+#detalleSemanal .day-summary {
+    background: var(--white);
+    border-left: 4px solid var(--secondary);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.summary-header {
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    border-bottom: 1px dashed #eee;
+    padding-bottom: 0.5rem;
+}
+.summary-body {
+    display: flex;
+    justify-content: space-around;
+    font-size: 0.85rem;
+    color: #444;
+    text-align: center;
+}
+.summary-stat div { font-weight: 600; }
+
+/* DOCK NAVEGACIÓN */
+#dock {
+  position: fixed; bottom: 0; left: 50%; 
+  transform: translateX(-50%); 
+  width: 100%; 
+  max-width: 600px; 
+  height: var(--dock-height);
+  
+  background: rgba(255, 255, 255, 0.95); 
+  border-radius: 20px 20px 0 0; 
+  box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+  backdrop-filter: blur(5px);
+  border-top: 1px solid rgba(0, 0, 0, 0.05); 
+
+  display: flex; 
+  justify-content: space-around; 
+  align-items: center;
+  z-index: 50; 
+}
+.dock-btn {
+    padding: 8px 0; 
+    border-radius: 12px;
+    flex: 1; 
+    transition: all 0.2s ease;
+    color: var(--dark);
+    opacity: 0.6;
+}
+.dock-btn.active {
+    background-color: var(--primary);
+    color: var(--white);
+    opacity: 1;
+}
+.dock-btn.active span {
+    filter: none; 
+}
