@@ -1,294 +1,128 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Shukudai: Misión Recompensa</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shukudai GO! ⭐ - HUD</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CDN (opcional, ya lo usabas) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Confetti (como en original) -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <link rel="stylesheet" href="style.css">
+    
 </head>
-<body class="min-h-screen">
-    <div class="app-container p-4 sm:rounded-xl min-h-screen sm:min-h-0 sm:my-4">
-
-        <header>
-            <h1 class="text-3xl font-extrabold mb-2">Shukudai GO! ⭐</h1>
-
-            <div id="marcador" class="stats-row mb-4">
-                <div class="stat-box">
-                    <div class="label">Puntos (Pts)</div>
-                    <div id="puntosTotales" class="big-number">0</div>
+<body class="gamer-background">
+    
+    <div class="app-container">
+        
+        <header class="hud-header">
+            <h1 class="app-title">Shukudai GO! ⭐</h1>
+            <div class="stats-panel">
+                <div class="stat-item">
+                    <span class="stat-label">Nivel</span>
+                    <span id="nivelActual" class="stat-value">1</span>
                 </div>
-                <div class="stat-box">
-                    <div class="label">Minutos (Min)</div>
-                    <div id="minutosTotales" class="big-number">0</div>
+                <div class="stat-item">
+                    <span class="stat-label">Puntos</span>
+                    <span id="puntosTotales" class="stat-value">0</span>
                 </div>
-                <div class="stat-box">
-                    <div class="label">Nivel</div>
-                    <div id="nivelActual" class="big-number">1</div>
+                <div class="stat-item">
+                    <span class="stat-label">Minutos</span>
+                    <span id="minutosTotales" class="stat-value">0</span>
                 </div>
             </div>
-
-            <div id="progreso">
-                <div id="xpBar">
-                    <div id="xpFill" style="width: 0%;"></div>
+            
+            <div class="xp-bar-container">
+                <div class="xp-label">XP: <span id="xpActual">0</span>/<span id="xpNecesaria">100</span></div>
+                <div class="xp-progress-bar">
+                    <div id="xpFill" class="xp-fill"></div>
                 </div>
-                <div id="xpTexto" class="text-xs mt-1 font-medium">0 / 125 xp</div>
-            </div>
-
-            <div id="acciones" class="flex justify-center space-x-2 mt-4">
-                <button id="btnPremioDiario" class="gold shadow-sm">🎁 Diario (+10)</button>
-                <button id="btnPremioSemanal" class="blue shadow-sm">🏆 Semanal (+70)</button>
             </div>
         </header>
 
-        <main class="mb-20">
-
-            <!-- VISTA TAREAS -->
-            <section id="vistaTareas" class="view">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-2xl font-bold text-gray-700">Tareas de Hoy 📝</h2>
-                    <button id="btnAdminTareas" class="btn-admin text-sm">⚙️ Administrar</button>
-                </div>
-                <div id="categorias" class="space-y-4"></div>
-            </section>
-
-            <!-- VISTA TIENDA -->
-            <section id="vistaTienda" class="view" style="display:none;">
-                <h2 class="text-2xl font-bold text-gray-700 mb-4">Tienda de Premios ✨</h2>
-
-                <div id="storeMessage" class="mb-4 p-3 rounded-lg text-center transition-colors duration-300">
-                    <h3 id="storeMessageTitle" class="font-extrabold text-lg"></h3>
-                    <p id="storeMessageBody" class="text-sm"></p>
+        <main class="main-content">
+            
+            <section id="home" class="view active-view">
+                <h2 class="view-title"><i class="fas fa-scroll"></i> Quest Log</h2>
+                <div id="addTaskForm" class="input-panel">
+                    <input type="text" id="taskNameInput" placeholder="Nombre de la Tarea/Misión">
+                    <input type="number" id="taskPointsInput" placeholder="Puntos (P.)" min="1">
+                    <input type="number" id="taskMinutesInput" placeholder="Minutos (M.)" min="1">
+                    <button id="addTaskBtn" class="action-btn primary-btn"><i class="fas fa-plus"></i> Añadir Misión</button>
                 </div>
 
-                <div id="contenedorPremios" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
-            </section>
-
-            <!-- VISTA HORARIO -->
-            <section id="vistaHorario" class="view" style="display:none;">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-2xl font-bold text-gray-700">Horario Escolar 🏫</h2>
-                    <button id="btnAdminHorario" class="btn-admin text-sm">⚙️ Administrar</button>
+                <div id="tasksList" class="tasks-list">
+                    <p class="placeholder-text">Aún no hay misiones activas.</p>
                 </div>
-                <div id="contenedorHorario" class="space-y-4"></div>
             </section>
-
-            <!-- VISTA AGENDA -->
-            <section id="vistaAgenda" class="view form-card" style="display:none;">
-                <h2 class="text-2xl font-bold text-gray-700 mb-4">Agenda y Eventos 🗓️</h2>
-
-                <h3 class="text-xl font-semibold text-gray-700 mb-2">Próximos Eventos</h3>
-                <div id="listaEventos" class="mb-6"></div>
-
-                <h3 class="text-xl font-semibold text-gray-700 mb-2">Añadir/Editar Evento</h3>
-                <form id="formAgenda" class="space-y-3 p-4 bg-indigo-50 rounded-lg shadow-inner">
-                    <input type="hidden" id="agendaId" value="">
-                    <div>
-                        <label for="agendaFecha" class="block text-sm font-medium text-gray-700">Fecha</label>
-                        <input type="date" id="agendaFecha" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 bg-white">
-                    </div>
-                    <div>
-                        <label for="agendaHora" class="block text-sm font-medium text-gray-700">Hora (Opcional)</label>
-                        <input type="time" id="agendaHora" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 bg-white">
-                    </div>
-                    <div class="flex space-x-3">
-                        <div class="flex-1">
-                            <label for="agendaAsignatura" class="block text-sm font-medium text-gray-700">Asignatura/Tema</label>
-                            <input type="text" id="agendaAsignatura" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" placeholder="Ej: Matemáticas">
-                        </div>
-                        <div class="flex-1">
-                            <label for="agendaTipo" class="block text-sm font-medium text-gray-700">Tipo de Evento</label>
-                            <select id="agendaTipo" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 bg-white">
-                                <option value="Examen">Examen</option>
-                                <option value="Cita">Cita / Médico</option>
-                                <option value="Entrega">Entrega de Trabajo</option>
-                                <option value="Otro">Otro</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label for="agendaComentarios" class="block text-sm font-medium text-gray-700">Comentarios</label>
-                        <textarea id="agendaComentarios" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" placeholder="Detalles..."></textarea>
-                    </div>
-
-                    <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition cursor-pointer">
-                        Guardar Evento
-                    </button>
-                </form>
-            </section>
-
-            <!-- VISTA INFORME -->
-            <section id="vistaInforme" class="view" style="display:none;">
-                <h2 class="text-2xl font-bold text-gray-700 mb-4">Informe Semanal 📊</h2>
-
-                <h3 class="text-xl font-semibold text-gray-700 mb-2">Resumen Total (Últimos 7 Días)</h3>
-                <div id="totalStats" class="grid grid-cols-2 gap-3 mb-6">
-                    <div class="stat-card p-3 bg-white rounded-lg text-center">
-                        <div class="text-xl font-extrabold text-green-600" id="compTot">0</div>
-                        <div class="text-xs text-gray-500 font-medium">Tareas OK</div>
-                    </div>
-                    <div class="stat-card p-3 bg-white rounded-lg text-center">
-                        <div class="text-xl font-extrabold text-red-600" id="failTot">0</div>
-                        <div class="text-xs text-gray-500 font-medium">Tareas Fallidas</div>
-                    </div>
-                    <div class="stat-card p-3 bg-white rounded-lg text-center">
-                        <div class="text-xl font-extrabold text-indigo-600" id="ptsTot">0</div>
-                        <div class="text-xs text-gray-500 font-medium">Puntos Ganados</div>
-                    </div>
-                    <div class="stat-card p-3 bg-white rounded-lg text-center">
-                        <div class="text-xl font-extrabold text-amber-500" id="minTot">0</div>
-                        <div class="text-xs text-gray-500 font-medium">Minutos Ganados</div>
-                    </div>
+            
+            <section id="shop" class="view hidden-view">
+                <h2 class="view-title"><i class="fas fa-box-open"></i> Loot Box</h2>
+                <div id="addPrizeForm" class="input-panel">
+                    <input type="text" id="prizeNameInput" placeholder="Nombre del Premio/Recompensa">
+                    <input type="number" id="prizeCostInput" placeholder="Costo en Puntos" min="1">
+                    <button id="addPrizeBtn" class="action-btn primary-btn"><i class="fas fa-plus"></i> Añadir Recompensa</button>
                 </div>
-
-                <h3 class="text-xl font-semibold text-gray-700 mb-2">Detalle Diario</h3>
-                <div id="detalleSemanal" class="space-y-3"></div>
+                <div id="prizesList" class="prizes-list">
+                    <p class="placeholder-text">No hay recompensas disponibles.</p>
+                </div>
+            </section>
+            
+            <section id="schedule" class="view hidden-view">
+                <h2 class="view-title"><i class="fas fa-clock"></i> Time Log</h2>
+                <div id="scheduleContent" class="schedule-content">
+                    <p class="placeholder-text">No hay eventos programados.</p>
+                </div>
             </section>
 
-            <!-- ADMIN TAREAS -->
-            <section id="vistaAdminTareas" class="view form-card" style="display:none;">
-                <h2 class="text-2xl font-bold text-gray-700 mb-4">⚙️ Administración de Tareas</h2>
-
-                <h3 class="text-xl font-semibold text-gray-700 mb-2">Catálogo Actual</h3>
-                <div id="listaTareasAdmin" class="mb-6 space-y-2"></div>
-
-                <h3 class="text-xl font-semibold text-gray-700 mb-2">Añadir/Editar Tarea</h3>
-                <form id="formTarea" class="space-y-3 p-4 bg-indigo-50 rounded-lg shadow-inner">
-                    <input type="hidden" id="tareaId" value="">
-                    <input type="hidden" id="tareaCategoriaOriginal" value="">
-
-                    <div class="flex space-x-3">
-                        <div class="flex-1">
-                            <label for="tareaNombre" class="block text-sm font-medium text-gray-700">Nombre de la Tarea</label>
-                            <input type="text" id="tareaNombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" placeholder="Ej: Fregar platos">
-                        </div>
-                        <div class="w-1/3">
-                            <label for="tareaCategoria" class="block text-sm font-medium text-gray-700">Categoría</label>
-                            <select id="tareaCategoria" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 bg-white"></select>
-                        </div>
-                    </div>
-
-                    <div class="flex space-x-3">
-                        <div class="flex-1">
-                            <label for="tareaPts" class="block text-sm font-medium text-gray-700">Puntos (Pts)</label>
-                            <input type="number" id="tareaPts" required min="1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" value="1">
-                        </div>
-                        <div class="flex-1">
-                            <label for="tareaMin" class="block text-sm font-medium text-gray-700">Minutos (Min)</label>
-                            <input type="number" id="tareaMin" required min="0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" value="0">
-                        </div>
-                    </div>
-
-                    <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition cursor-pointer">
-                        Guardar Tarea
-                    </button>
-                    <button type="button" id="btnCancelarEdicion" class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition cursor-pointer" style="display:none;">
-                        Cancelar Edición
-                    </button>
-                </form>
+            <section id="agenda" class="view hidden-view">
+                <h2 class="view-title"><i class="fas fa-calendar-days"></i> Agenda Log</h2>
+                <div id="agendaContent" class="agenda-content">
+                    <p class="placeholder-text">No hay entradas en la agenda.</p>
+                </div>
             </section>
 
-            <!-- ADMIN HORARIO -->
-            <section id="vistaAdminHorario" class="view form-card" style="display:none;">
-                <h2 class="text-2xl font-bold text-gray-700 mb-4">⚙️ Administración de Horario</h2>
-
-                <h3 class="text-xl font-semibold text-gray-700 mb-2">Horario Actual</h3>
-                <div id="listaHorarioAdmin" class="mb-6 space-y-2"></div>
-
-                <h3 class="text-xl font-semibold text-gray-700 mb-2">Añadir/Editar Clase</h3>
-                <form id="formHorario" class="space-y-3 p-4 bg-indigo-50 rounded-lg shadow-inner">
-                    <input type="hidden" id="claseId" value="">
-                    <div class="flex space-x-3">
-                        <div class="w-1/3">
-                            <label for="claseDia" class="block text-sm font-medium text-gray-700">Día</label>
-                            <select id="claseDia" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 bg-white">
-                                <option value="Lunes">Lunes</option>
-                                <option value="Martes">Martes</option>
-                                <option value="Miercoles">Miércoles</option>
-                                <option value="Jueves">Jueves</option>
-                                <option value="Viernes">Viernes</option>
-                                <option value="Sabado">Sábado</option>
-                                <option value="Domingo">Domingo</option>
-                            </select>
-                        </div>
-                        <div class="flex-1">
-                            <label for="claseNombre" class="block text-sm font-medium text-gray-700">Asignatura/Actividad</label>
-                            <input type="text" id="claseNombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" placeholder="Ej: Matemáticas o Natación">
-                        </div>
-                    </div>
-
-                    <div class="flex space-x-3">
-                        <div class="flex-1">
-                            <label for="claseInicio" class="block text-sm font-medium text-gray-700">Hora Inicio</label>
-                            <input type="time" id="claseInicio" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2">
-                        </div>
-                        <div class="flex-1">
-                            <label for="claseFin" class="block text-sm font-medium text-gray-700">Hora Fin</label>
-                            <input type="time" id="claseFin" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="claseTipo" class="block text-sm font-medium text-gray-700">Tipo de Clase (Opcional)</label>
-                        <select id="claseTipo" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 bg-white">
-                            <option value="">Clase Normal (Escolar)</option>
-                            <option value="extra">Extraescolar / Comedor</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition cursor-pointer">
-                        Guardar Clase
-                    </button>
-                    <button type="button" id="btnCancelarEdicionHorario" class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition cursor-pointer" style="display:none;">
-                        Cancelar Edición
-                    </button>
-                </form>
+            <section id="report" class="view hidden-view">
+                <h2 class="view-title"><i class="fas fa-chart-simple"></i> Scoreboard</h2>
+                <div id="reportContent" class="report-content">
+                    <p class="placeholder-text">Las estadísticas se mostrarán aquí.</p>
+                </div>
             </section>
 
-            <div class="text-center mt-6">
-                <button id="btnReset" class="danger-outline text-xs underline cursor-pointer">Reiniciar Todos los Datos (Borrar)</button>
-            </div>
         </main>
+        
+        <nav id="dock" class="dock-bar">
+            <button id="homeBtn" class="dock-btn active">
+                <i class="fas fa-scroll"></i>
+                <span class="btn-label">Tareas</span>
+            </button>
+            
+            <button id="shopBtn" class="dock-btn">
+                <i class="fas fa-box-open"></i>
+                <span class="btn-label">Tienda</span>
+            </button>
+            
+            <button id="scheduleBtn" class="dock-btn">
+                <i class="fas fa-clock"></i>
+                <span class="btn-label">Horario</span>
+            </button>
+            
+            <button id="agendaBtn" class="dock-btn">
+                <i class="fas fa-calendar-days"></i>
+                <span class="btn-label">Agenda</span>
+            </button>
 
-        <!-- DOCK NAVEGACIÓN -->
-        <div id="dock">
-            <div class="flex justify-around items-center w-full">
-                <button id="homeBtn" class="dock-btn p-3 rounded-xl flex flex-col items-center text-gray-500 active w-1/5">
-                    <span class="text-2xl">📋</span>
-                    <span class="text-xs font-medium mt-1">Tareas</span>
-                </button>
+            <button id="reportBtn" class="dock-btn">
+                <i class="fas fa-chart-simple"></i>
+                <span class="btn-label">Informe</span>
+            </button>
+        </nav>
 
-                <button id="shopBtn" class="dock-btn p-3 rounded-xl flex flex-col items-center text-gray-500 w-1/5">
-                    <span class="text-2xl">🎁</span>
-                    <span class="text-xs font-medium mt-1">Tienda</span>
-                </button>
-
-                <button id="scheduleBtn" class="dock-btn p-3 rounded-xl flex flex-col items-center text-gray-500 w-1/5">
-                    <span class="text-2xl">⏰</span>
-                    <span class="text-xs font-medium mt-1">Horario</span>
-                </button>
-
-                <button id="agendaBtn" class="dock-btn p-3 rounded-xl flex flex-col items-center text-gray-500 w-1/5">
-                    <span class="text-2xl">📅</span>
-                    <span class="text-xs font-medium mt-1">Agenda</span>
-                </button>
-
-                <button id="reportBtn" class="dock-btn p-3 rounded-xl flex flex-col items-center text-gray-500 w-1/5">
-                    <span class="text-2xl">📊</span>
-                    <span class="text-xs font-medium mt-1">Informe</span>
-                </button>
-            </div>
-        </div>
     </div>
 
-    <!-- Script JS principal (refactorizado) -->
     <script src="app.js"></script>
 </body>
 </html>
