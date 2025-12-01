@@ -1,125 +1,309 @@
-/* Variables de la Paleta de Colores (Gamer HUD) */
+/* Variables de la Paleta de Colores (Fortnite Inspired) */
 :root {
-    --color-background-dark: #0a0a0a; 
-    --color-panel-dark: #1a1a1a; 
-    --color-text-light: #ffffff; 
-    
-    --color-neon-primary: #00e5ff; 
-    --color-neon-secondary: #ccff00; 
-    --color-neon-danger: #ff4d4d; 
-    
-    --neon-glow-primary: 0 0 5px var(--color-neon-primary), 0 0 10px var(--color-neon-primary);
-    --neon-glow-secondary: 0 0 5px var(--color-neon-secondary), 0 0 10px var(--color-neon-secondary);
-    --neon-glow-danger: 0 0 5px var(--color-neon-danger), 0 0 10px var(--color-neon-danger);
-    
-    --font-gamer: 'Orbitron', sans-serif;
-    --border-radius-sharp: 4px;
-    --dock-height: 70px; /* Altura fija para el dock */
+  --primary: #42A5F5; /* Azul Brillante */
+  --secondary: #CDDC39; /* Verde Neón/Lima (Progreso/Éxito) */
+  --accent: #FF9800; /* Naranja Vibrante (Acento/Acciones) */
+  --danger: #EF5350; /* Rojo Suave (Fail/Danger) */
+  --bg: #F5F5F5; /* Fondo muy claro, casi blanco */
+  --dark: #212121; /* Texto oscuro */
+  --card-bg: #FFFFFF; /* Fondo de tarjetas */
+  --dock-bg: rgba(255, 255, 255, 0.9);
+  --dock-height: 70px;
+
+  /* Fuentes */
+  --font-title: 'Luckiest Guy', cursive;
+  --font-body: 'Inter', sans-serif; /* Usamos Inter como fallback del original */
+
+  /* Efectos */
+  --shadow-lift: 0 6px 15px rgba(0, 0, 0, 0.15); /* Sombra suave para elementos que "flotan" */
+  --border-radius-xl: 16px;
+  --border-radius-l: 12px;
 }
 
-/* Estilos Globales y Tipografía */
-html, body {
-    height: 100%; /* Asegura que el body ocupe toda la ventana */
-    overflow: hidden; /* Evita que el scroll afecte al body entero */
-}
+/* Base Mobile-First */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    font-family: Arial, sans-serif; 
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Alineación cambiada para ocupar altura */
-    background-color: var(--color-background-dark);
-    color: var(--color-text-light);
-    font-size: 16px;
+  font-family: var(--font-body);
+  background-color: var(--bg);
+  color: var(--dark);
+  padding-bottom: calc(var(--dock-height) + 15px); /* Espacio para el dock */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* LAYOUT PRINCIPAL (Mobile) */
 .app-container {
     width: 100%;
-    max-width: 420px;
-    height: 100vh; /* Ocupa la altura total de la vista */
-    background-color: var(--color-background-dark);
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.2); 
+    margin: 0 auto;
+    background-color: var(--card-bg);
+    box-shadow: none; /* Se usará solo en desktop */
+}
+
+/* MEDIA QUERY para Desktop/Tablet */
+@media (min-width: 640px) {
+    body {
+        background: linear-gradient(135deg, var(--primary) 0%, #B3E5FC 100%); /* Fondo degradado en desktop */
+    }
+    .app-container {
+        max-width: 600px;
+        min-height: auto;
+        border-radius: var(--border-radius-xl);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Sombra elevada para la app */
+    }
+}
+
+/* HEADER (Fortnite Battle Pass Banner) */
+.fortnite-header {
+  background: linear-gradient(90deg, var(--primary), #00BCD4); /* Degradado Azul/Cian */
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 0 0 var(--border-radius-xl) var(--border-radius-xl);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.fortnite-header h1 {
+  font-family: var(--font-title);
+  text-shadow: 2px 2px 0 var(--dark); /* Efecto 3D de título */
+  font-size: 2.2rem;
+  margin-bottom: 5px;
+}
+
+/* MARCADOR (Stats de Jugador) */
+#marcador { padding: 10px; background: rgba(0, 0, 0, 0.1); border-radius: var(--border-radius-l); }
+.stats-row { display: flex; justify-content: space-around; text-align: center; }
+.label { 
+    display: block; font-size: 0.75rem; 
+    color: #CFD8DC; /* Gris claro sobre azul */
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+}
+.big-number { 
+    font-size: 1.8rem; font-weight: 800; 
+    color: var(--secondary); /* Color acento para los números */
+    font-family: var(--font-title);
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+}
+.stat-box { margin: 0 5px; flex-grow: 1; } 
+
+
+/* XP BAR (Barra de progreso de Nivel) */
+#progreso { padding: 0 10px; margin-top: 10px; }
+#xpBar { 
+    height: 15px; 
+    background: #E0E0E0; 
+    border-radius: 10px; 
+    margin: 5px 0; 
+    overflow: hidden; 
+    border: 2px solid var(--secondary);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+}
+#xpFill { 
+    height: 100%; 
+    width: 0%; 
+    background: linear-gradient(90deg, #9CCC65, var(--secondary)); /* Verde degradado */
+    transition: width 0.5s ease; 
+}
+#xpTexto { 
+    text-align: right; 
+    color: var(--secondary); 
+    font-weight: bold; 
+}
+
+
+/* MAIN LAYOUT */
+main { padding: 15px; max-width: 600px; margin: 0 auto; }
+
+/* TITULOS DE SECCIÓN */
+.section-title {
+    font-family: var(--font-title);
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    color: var(--dark);
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 5px;
+    margin-bottom: 15px;
     display: flex;
-    flex-direction: column;
-    position: relative; /* Necesario para que el dock fijo se posicione correctamente */
+    align-items: center;
+    gap: 10px;
+}
+.subsection-title {
+    font-family: var(--font-title);
+    font-size: 1.2rem;
+    color: var(--primary);
+    margin: 20px 0 10px;
 }
 
-h1, h2, .stat-value {
-    font-family: var(--font-gamer);
-    font-weight: 700;
+/* CARDS y FORMS (Estilo redondeado y con sombra) */
+section, details, .premio-card, .horario-dia, .agenda-card, .form-card, .task, .task-admin-card, .day-summary {
+  background: var(--card-bg);
+  border-radius: var(--border-radius-l);
+  box-shadow: var(--shadow-lift);
+  margin-bottom: 15px;
+  overflow: hidden;
+  border: 1px solid #ECEFF1;
 }
 
-/* Header / Panel de Estadísticas (HUD) - Mantiene su posición */
-.hud-header {
-    background-color: var(--color-panel-dark);
-    padding: 15px 20px;
-    border-bottom: 2px solid var(--color-neon-primary);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    flex-shrink: 0; /* Evita que se encoja al hacer scroll */
+/* BOTONES DE ACCIÓN PRINCIPALES */
+.action-btn { 
+    border: none; cursor: pointer; 
+    font-family: var(--font-title); 
+    text-transform: uppercase;
+    padding: 12px 15px;
+    border-radius: var(--border-radius-l);
+    transition: transform 0.1s, box-shadow 0.2s;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.2); /* Sombra 3D */
+    line-height: 1;
+}
+.action-btn:active { 
+    transform: translateY(2px); 
+    box-shadow: 0 2px 0 rgba(0,0,0,0.2);
 }
 
-/* ... Estilos de stats-panel, xp-bar-container, etc., sin cambios ... */
+.gold-btn { background-color: var(--accent); color: var(--dark); }
+.blue-btn { background-color: var(--primary); color: var(--white); }
+.primary-btn { background-color: var(--primary); color: var(--white); }
+.secondary-btn { background-color: #CFD8DC; color: var(--dark); }
+.danger-btn { background-color: var(--danger); color: var(--white); }
 
-/* Contenido Principal (Vistas) - Área con Scroll */
-.main-content {
-    flex-grow: 1;
-    padding: 20px;
-    padding-bottom: var(--dock-height); /* AÑADIDO: Para evitar que el dock cubra el contenido */
-    overflow-y: auto; /* AÑADIDO: Permite el scroll solo en esta área */
+.action-btn i { margin-right: 5px; }
+
+/* TAREAS (ACORDEÓN) - Estilos Fortnite */
+summary {
+    font-family: var(--font-title);
+    list-style: none; cursor: pointer; 
+    font-size: 1.125rem; 
+    font-weight: bold; 
+    padding: 0.75rem; 
+    background-color: #E3F2FD; /* Fondo azul claro */
+    border-radius: var(--border-radius-l); 
+    margin-bottom: 0.5rem; 
+    display: flex; 
+    justify-content: space-between;
+    text-transform: uppercase;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+details[open] summary { border-radius: var(--border-radius-l) var(--border-radius-l) 0 0; }
+summary:hover { background-color: #BBDEFB; }
+
+.task { 
+    border-top: 1px solid #eee; 
+    padding: 0.75rem; 
+}
+.task-name { color: var(--dark); font-weight: bold; }
+.task-meta { font-size: 0.8rem; color: #757575; }
+
+/* Botones de Tarea (Check/Fail) */
+.task-actions button {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.3); /* Sombra 3D más pequeña */
+    line-height: 1;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 8px;
+    transition: all 0.1s;
+}
+.task-actions button:active { 
+    transform: translateY(2px); 
+    box-shadow: 0 1px 0 rgba(0,0,0,0.3);
 }
 
-.hidden-view {
-    display: none;
+.check { background-color: var(--secondary); color: var(--dark); } /* Verde Neón */
+.fail { background-color: var(--danger); color: var(--white); } /* Rojo */
+.completed-task { opacity: 0.6; border-left: 5px solid var(--secondary); background-color: #F9FBE7; }
+
+/* Premios (Loot Cards) */
+.premio-card { 
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    padding: 15px; 
+    background: #F5F5F5;
+    border: 3px solid var(--accent);
+}
+.premio-icono { font-size: 3rem; margin-bottom: 5px; }
+.redeem-btn { 
+    margin-top: 10px; 
+    background-color: var(--accent); 
+    color: var(--dark);
+    font-size: 0.85rem;
+    padding: 8px 10px;
+}
+.prize-message-card {
+    background: #FFFDE7;
+    border: 2px solid var(--accent);
+    color: var(--dark);
+    box-shadow: var(--shadow-lift);
 }
 
-/* ... Estilos de input-panel, action-btn, task-item, etc., sin cambios ... */
+/* Formularios de Administración */
+.form-label { font-weight: bold; color: var(--primary); }
+.form-input {
+    width: 100%; padding: 10px; 
+    border: 1px solid #B0BEC5; 
+    border-radius: 8px; 
+    background-color: var(--card-bg);
+    transition: border-color 0.2s;
+}
+.form-input:focus { border-color: var(--primary); outline: none; }
 
 
-/* Dock de Navegación (Barra de Acceso Rápido) - Siempre visible */
-.dock-bar {
-    display: flex;
-    justify-content: space-around;
-    background-color: #000000;
-    border-top: 2px solid var(--color-neon-primary);
-    padding: 10px 0;
-    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    
-    /* CORRECCIÓN: Hace que el Dock sea siempre visible en la parte inferior */
-    position: fixed; 
-    bottom: 0;
-    width: 100%;
-    max-width: 420px; /* Asegura que no se salga del contenedor principal */
-    height: var(--dock-height);
+/* DOCK NAVEGACIÓN (Barra de Acceso Rápido Flotante) */
+#dock {
+  position: fixed; bottom: 0; left: 0; 
+  width: 100%; 
+  height: var(--dock-height);
+  background: var(--dock-bg);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 5px;
+  border-top-left-radius: var(--border-radius-l);
+  border-top-right-radius: var(--border-radius-l);
+}
+
+@media (min-width: 640px) {
+    #dock {
+        left: 50%; 
+        transform: translateX(-50%); 
+        max-width: 600px;
+    }
 }
 
 .dock-btn {
     background: none;
     border: none;
-    color: #999;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: color 0.2s, text-shadow 0.2s;
-    padding: 5px;
-    font-family: var(--font-gamer);
+    transition: color 0.2s, background-color 0.2s, transform 0.1s;
+    padding: 5px 0;
+    font-family: var(--font-body);
+    color: #757575; /* Iconos inactivos */
+    width: 20%;
 }
 
 .dock-btn i {
-    font-size: 1.4em;
-    margin-bottom: 3px;
+    font-size: 1.5rem;
+    margin-bottom: 2px;
 }
 
 .dock-btn.active, .dock-btn:hover {
-    color: var(--color-neon-primary);
-    text-shadow: var(--neon-glow-primary);
+    color: var(--primary); /* Icono activo/hover */
+    transform: translateY(-2px);
 }
 
 .btn-label {
-    font-size: 0.7em;
-    font-weight: 400;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
 }
-/* ... Resto de estilos sin cambios ... */
