@@ -251,6 +251,97 @@ summary:hover { background-color: #BBDEFB; }
 }
 .form-input:focus { border-color: var(--primary); outline: none; }
 
+/* --- SECCIÓN HORARIO --- */
+
+/* Resaltar día de la semana */
+.dia-titulo {
+    font-family: var(--font-title);
+    font-size: 1.25rem;
+    color: var(--card-bg); 
+    background: linear-gradient(90deg, var(--primary), #00BCD4); /* Mismo degradado del header */
+    padding: 12px 15px;
+    text-transform: uppercase;
+    font-weight: 800;
+    border-radius: var(--border-radius-l) var(--border-radius-l) 0 0;
+}
+
+/* Separar texto del borde en las clases */
+.asignatura {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 15px; 
+    border-top: 1px solid #ECEFF1;
+    transition: background-color 0.2s;
+}
+.asignatura:hover {
+    background-color: #F8F8F8;
+}
+.asignatura.extra {
+    background-color: #FFF3E0; 
+}
+.asignatura.extra:hover {
+    background-color: #FFE0B2;
+}
+.asignatura-nombre { font-weight: 600; }
+.asignatura-hora { font-size: 0.9rem; color: #757575; }
+
+/* --- SECCIÓN AGENDA --- */
+
+.agenda-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; 
+    padding: 15px 20px; /* Aumento de padding horizontal */
+    border-left: 5px solid var(--accent);
+    margin-bottom: 12px;
+}
+.agenda-info {
+    flex-grow: 1;
+    padding-right: 15px; 
+}
+.agenda-subject { font-weight: bold; color: var(--dark); margin-bottom: 5px; } 
+.agenda-date { font-size: 0.9rem; color: #757575; margin-bottom: 5px; } 
+.agenda-comments { font-size: 0.85rem; color: #444; margin-top: 5px; }
+.agenda-actions button {
+    /* Mismo estilo que botones de tarea admin */
+    width: 32px; height: 32px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background-color: #CFD8DC;
+    margin-left: 5px;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+}
+.agenda-actions button:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+}
+
+
+/* --- SECCIÓN INFORME --- */
+#detalleSemanal .day-summary {
+    background: var(--card-bg);
+    border-left: 4px solid var(--primary); 
+    padding: 1.25rem; /* Aumento de padding */
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.summary-header {
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 0.75rem; /* Aumento de margin-bottom */
+    border-bottom: 1px dashed #B0BEC5; 
+    padding-bottom: 0.75rem;
+}
+.summary-body {
+    display: flex;
+    justify-content: space-around;
+    font-size: 0.85rem;
+    color: #444;
+    text-align: center;
+}
+.summary-stat div { font-weight: 600; }
+
 
 /* DOCK NAVEGACIÓN (Barra de Acceso Rápido Flotante) */
 #dock {
